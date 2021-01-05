@@ -4,11 +4,11 @@ rem # Batch file to create a site.
 rem ## Settings for the site:
 set env="qa"
 set dc="us"
-set site_id=""
+set siteid=""
 
 set limit="20"
 rem ## uuid
-set start=
+set start=""
 
 
 rem ## Authentication
@@ -18,10 +18,10 @@ set oauth_id=""
 set oauth_secret=""
 set oauth_scope=""
 
-python make-folder.py ^
+python file-listing.py ^
     --dc %dc% ^
     --env %env% ^
-    --site_id %site_id% ^
+    --siteid %siteid% ^
     --start %start% ^
     --limit %limit% ^
     --jwt %jwt% ^

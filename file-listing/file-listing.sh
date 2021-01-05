@@ -4,7 +4,7 @@
 ## Settings for the site:
 env="qa"
 dc="us"
-site_id=""
+siteid=""
 
 limit="20"
 # start id uuid
@@ -20,7 +20,7 @@ oauth_scope=""
 exec python file-listing.py \
     --dc "$dc" \
     --env "$env" \
-    --site-id "$site_id" \
+    --siteid "$siteid" \
     --start "$start" \
     --limit "$limit" \
     --jwt "$jwt" \
