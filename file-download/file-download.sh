@@ -4,7 +4,7 @@
 ## Settings for the site:
 env="qa"
 dc="us"
-site_id=""
+siteid=""
 
 file_uuid=""
 
@@ -18,9 +18,9 @@ oauth_scope=""
 exec python file-download.py \
     --dc "$dc" \
     --env "$env" \
-    --site-id "$site_id" \
+    --siteid "$siteid" \
+    --file-uuid "$file_uuid" \
     --jwt "$jwt" \
     --oauth-id "$oauth_id" \
     --oauth-secret "$oauth_secret" \
-    --oauth-scope "$oauth_scope" \
-    "$file_uuid"
+    --oauth-scope "$oauth_scope"

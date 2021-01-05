@@ -15,12 +15,12 @@ set oauth_id=""
 set oauth_secret=""
 set oauth_scope=""
 
-python file-upload.py ^
+python file-download.py ^
     --dc %dc% ^
     --env %env% ^
-    --site_id %site_id% ^
+    --siteid %siteid% ^
+    --file-uuid %file_uuid% ^
     --jwt %jwt% ^
     --oauth-id %oauth_id% ^
     --oauth-secret %oauth_secret% ^
-    --oauth-scope %oauth_scope% ^
-    file_uuid
+    --oauth-scope %oauth_scope%
