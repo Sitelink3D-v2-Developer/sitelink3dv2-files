@@ -4,7 +4,7 @@
 ## Settings for the site:
 env="qa"
 dc="us"
-site_id=""
+siteid=""
 
 file_uuid=""
 folder_uuid=""
@@ -20,11 +20,11 @@ oauth_scope=""
 exec python file-upload.py \
     --dc "$dc" \
     --env "$env" \
-    --site-id "$site_id" \
+    --siteid "$siteid" \
     --file-uuid "$file_uuid" \
+    --file-path "$file_path" \
     --folder-uuid "$folder_uuid" \
     --jwt "$jwt" \
     --oauth-id "$oauth_id" \
     --oauth-secret "$oauth_secret" \
-    --oauth-scope "$oauth_scope" \
-    "$file_path"
+    --oauth-scope "$oauth_scope"

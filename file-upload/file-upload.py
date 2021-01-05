@@ -40,22 +40,21 @@ arg_parser.add_argument("--oauth-secret", default="", help="oauth-secret")
 arg_parser.add_argument("--oauth-scope", default="", help="oauth-scope")
 
 # request parameters:
-arg_parser.add_argument("--site-id", default="", help="Site Identifier", required=True)
+arg_parser.add_argument("--siteid", default="", help="Site Identifier", required=True)
+arg_parser.add_argument("--file-path", help="File to upload")
 arg_parser.add_argument("--file-uuid", default=str(uuid.uuid4()), help="File uuid")
 arg_parser.add_argument("--folder-uuid", default=None, help="Folder uuid")
-arg_parser.add_argument("file_path", help="File to upload")
 
 arg_parser.set_defaults()
 args = arg_parser.parse_args()
 logging.basicConfig(format=args.log_format, level=args.log_level)
 # << Arguments
 
-
 # << Server settings
 scheme, host, port = shp(args.env, SR_EDGE_SCHEME, SR_EDGE_HOST, SR_EDGE_PORT)
 server_url = "{}://{}-{}:{}".format(scheme, args.dc, host, port)
-upload_file_url = "{0}/file/v1/sites/{1}/upload".format(server_url, args.site_id)
-rdm_upload_url = "{0}/rdm_log/v1/site/{1}/domain/{2}/events".format(server_url, args.site_id, "file_system")
+upload_file_url = "{0}/file/v1/sites/{1}/upload".format(server_url, args.siteid)
+rdm_upload_url = "{0}/rdm_log/v1/site/{1}/domain/{2}/events".format(server_url, args.siteid, "file_system")
 oauth_edge_url = "{0}/oauth/v1/token".format(server_url)
 headers = {'content-type': 'application/json', 'X-Topcon-Auth': args.jwt}
 session = requests.Session()
@@ -67,9 +66,11 @@ if len(args.oauth_id) > 0 and len(args.oauth_secret) > 0 and len(args.oauth_scop
 # << Server settings
 
 # Upload file
-file_uuid = args.file_uuid
-if is_valid_uuid(file_uuid):
+if is_valid_uuid(args.file_uuid):
+    file_uuid = args.file_uuid
+else:
     file_uuid = str(uuid.uuid4())
+
 file_path = args.file_path
 file_name = os.path.basename(file_path)
 file_size = os.path.getsize(file_path)
@@ -78,6 +79,7 @@ params = {
     "upload-file-size": file_size,
     "upload-uuid": file_uuid,
 }
+
 with open(file_path, 'rb') as file_ptr:
     files = {
         "upload-file": file_ptr
@@ -98,10 +100,11 @@ payload = {
     "size" : file_size,
     "uuid" : file_uuid
 }
+
 if is_valid_uuid(args.folder_uuid):
     payload["parent"] = args.folder_uuid
 
 data_encoded_json = {"data_b64": base64.b64encode(json.dumps(payload).encode('utf-8')).decode('utf-8')}
 response = session.post(rdm_upload_url, headers=headers, data=json.dumps(data_encoded_json))
 response.raise_for_status()
-print ("Site {0} file uploaded \n{1}".format(args.site_id, json.dumps(payload, indent=4)))
+print ("Site {0} file uploaded \n{1}".format(args.siteid, json.dumps(payload, indent=4)))
