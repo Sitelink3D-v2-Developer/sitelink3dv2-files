@@ -4,11 +4,11 @@
 ## Settings for the site:
 env="qa"
 dc="us"
-site_id=""
+siteid=""
 
-folder_name="New Folder"
-folder_uuid=
-parent_uuid=
+folder_name=""
+folder_uuid=""
+parent_uuid=""
 
 ## Authentication
 jwt=""
@@ -21,11 +21,11 @@ oauth_scope=""
 exec python make-folder.py \
     --dc "$dc" \
     --env "$env" \
-    --site-id "$site_id" \
+    --siteid "$siteid" \
+    --folder-name "$folder_name" \
     --folder-uuid "$folder_uuid" \
     --parent-uuid "$parent_uuid" \
     --jwt "$jwt" \
     --oauth-id "$oauth_id" \
     --oauth-secret "$oauth_secret" \
-    --oauth-scope "$oauth_scope" \
-    "$folder_name"
+    --oauth-scope "$oauth_scope"
